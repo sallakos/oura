@@ -42,12 +42,16 @@ exports.createPages = async function ({ actions, graphql }) {
       }
     }
   `)
-  data.allReadiness.nodes.forEach(node => {
+  const nodes = data.allReadiness.nodes
+  const minDate = nodes[0].summary_date
+  const maxDate = nodes[nodes.length - 1].summary_date
+
+  nodes.forEach(node => {
     const slug = `/${node.summary_date}`
     actions.createPage({
       path: slug,
       component: require.resolve(`./src/templates/Data.tsx`),
-      context: { date: node.summary_date },
+      context: { date: node.summary_date, minDate, maxDate },
     })
   })
 }

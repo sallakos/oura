@@ -9,16 +9,17 @@ const dateString = (date: Date) =>
     date.getMonth() + 1
   )}-${addLeadingZero(date.getDate())}`
 
-export default ({ data }) => {
+export default ({ data, pageContext }) => {
   const { sleep, activity } = data
+  const { minDate, maxDate } = pageContext
 
   const date = new Date(activity.summary_date)
 
   return (
     <div>
       <Calendar
-        minDate={new Date(2020, 4, 7)}
-        maxDate={new Date()}
+        minDate={new Date(minDate)}
+        maxDate={new Date(maxDate)}
         defaultValue={date}
         onClickDay={value => navigate(`/${dateString(value)}`)}
       />
