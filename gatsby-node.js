@@ -54,4 +54,10 @@ exports.createPages = async function ({ actions, graphql }) {
       context: { date: node.summary_date, minDate, maxDate },
     })
   })
+
+  actions.createPage({
+    path: `/`,
+    component: require.resolve(`./src/templates/FrontPage.tsx`),
+    context: { minDate, maxDate },
+  })
 }
