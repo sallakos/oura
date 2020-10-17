@@ -1,13 +1,6 @@
 import React from 'react'
-import { graphql, navigate } from 'gatsby'
-import Calendar from 'react-calendar'
-
-const addLeadingZero = (value: number) =>
-  value < 10 ? `0${value}` : `${value}`
-const dateString = (date: Date) =>
-  `${date.getFullYear()}-${addLeadingZero(
-    date.getMonth() + 1
-  )}-${addLeadingZero(date.getDate())}`
+import { graphql } from 'gatsby'
+import Page from '../components/Page'
 
 export default ({ data, pageContext }) => {
   const { sleep, activity } = data
@@ -16,16 +9,11 @@ export default ({ data, pageContext }) => {
   const date = new Date(activity.summary_date)
 
   return (
-    <div>
-      <Calendar
-        minDate={new Date(minDate)}
-        maxDate={new Date(maxDate)}
-        defaultValue={date}
-        onClickDay={value => navigate(`/${dateString(value)}`)}
-      />
+    <Page minDate={minDate} maxDate={maxDate} date={date}>
+      <h1>{date.toDateString()}</h1>
       <p>SLEEP SCORE: {sleep.score}</p>
       <p>ACTIVITY SCORE: {activity.score}</p>
-    </div>
+    </Page>
   )
 }
 
