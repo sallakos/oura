@@ -32,18 +32,17 @@ exports.sourceNodes = async ({
 
   return
 }
-
 exports.createPages = async function ({ actions, graphql }) {
   const { data } = await graphql(`
     query {
-      allActivity {
+      allReadiness {
         nodes {
           summary_date
         }
       }
     }
   `)
-  data.allActivity.nodes.forEach(node => {
+  data.allReadiness.nodes.forEach(node => {
     const slug = `/${node.summary_date}`
     actions.createPage({
       path: slug,

@@ -17,6 +17,8 @@ export default ({ data }) => {
   return (
     <div>
       <Calendar
+        minDate={new Date(2020, 4, 7)}
+        maxDate={new Date()}
         defaultValue={date}
         onClickDay={value => navigate(`/${dateString(value)}`)}
       />
