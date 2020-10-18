@@ -9,6 +9,7 @@ module.exports = {
     title: `Sallan Oura`,
   },
   plugins: [
+    `gatsby-plugin-styled-components`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {

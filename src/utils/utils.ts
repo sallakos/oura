@@ -25,3 +25,11 @@ const chooseWeekDay = (date: Date) => {
       ''
   }
 }
+
+const addLeadingZero = (value: number) =>
+  value < 10 ? `0${value}` : `${value}`
+
+export const dateUrl = (date: Date) =>
+  `${date.getFullYear()}-${addLeadingZero(
+    date.getMonth() + 1
+  )}-${addLeadingZero(date.getDate())}`

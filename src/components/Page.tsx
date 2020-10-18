@@ -1,13 +1,23 @@
 import React from 'react'
 import { graphql, navigate, useStaticQuery } from 'gatsby'
+import styled from 'styled-components'
 import Calendar from 'react-calendar'
+import { createGlobalStyle } from 'styled-components'
+import { dateUrl } from '../utils/utils'
 
-const addLeadingZero = (value: number) =>
-  value < 10 ? `0${value}` : `${value}`
-const dateString = (date: Date) =>
-  `${date.getFullYear()}-${addLeadingZero(
-    date.getMonth() + 1
-  )}-${addLeadingZero(date.getDate())}`
+import Asap from '../fonts/Asap-Regular.ttf'
+
+const GlobalStyle = createGlobalStyle`
+
+  @font-face {
+    font-family: Asap;
+    src: url(${Asap}) format('truetype');
+  }
+
+  body {
+    font-family: 'Asap', Arial, Helvetica, sans-serif;
+  }
+`
 
 export default ({ date, children }) => {
   const query = graphql`
@@ -26,12 +36,13 @@ export default ({ date, children }) => {
 
   return (
     <div>
+      <GlobalStyle />
       {children}
       <Calendar
         minDate={new Date(minDate)}
         maxDate={max}
         defaultValue={defaultDate}
-        onClickDay={value => navigate(`/${dateString(value)}`)}
+        onClickDay={value => navigate(`/${dateUrl(value)}`)}
       />
     </div>
   )
