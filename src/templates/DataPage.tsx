@@ -31,7 +31,7 @@ interface ActivityData {
   high: number
 }
 
-export const DataPage = ({ data, pageContext }: Props) => {
+export default ({ data, pageContext }: Props) => {
   const { sleep, activity } = data
 
   const date = new Date(pageContext.date)
