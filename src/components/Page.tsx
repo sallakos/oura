@@ -1,7 +1,6 @@
 import React from 'react'
 import { graphql, navigate, useStaticQuery } from 'gatsby'
-import styled from 'styled-components'
-import Calendar from 'react-calendar'
+import Calendar from './Calendar'
 import { createGlobalStyle } from 'styled-components'
 import { dateUrl } from '../utils/utils'
 
@@ -14,9 +13,11 @@ const GlobalStyle = createGlobalStyle`
     src: url(${Asap}) format('truetype');
   }
 
-  body {
+  * {
     font-family: 'Asap', Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
   }
+
 `
 
 export default ({ date, children }) => {
