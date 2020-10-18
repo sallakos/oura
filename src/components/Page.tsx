@@ -1,5 +1,5 @@
 import React from 'react'
-import { navigate } from 'gatsby'
+import { graphql, navigate, useStaticQuery } from 'gatsby'
 import Calendar from 'react-calendar'
 
 const addLeadingZero = (value: number) =>
@@ -9,14 +9,28 @@ const dateString = (date: Date) =>
     date.getMonth() + 1
   )}-${addLeadingZero(date.getDate())}`
 
-export default ({ minDate, maxDate, date, children }) => {
+export default ({ date, children }) => {
+  const query = graphql`
+    query {
+      values {
+        minDate
+        maxDate
+      }
+    }
+  `
+  const data = useStaticQuery(query)
+  const { minDate, maxDate } = data.values
+
+  const max = new Date(maxDate)
+  const defaultDate = date > max ? max : date
+
   return (
     <div>
       {children}
       <Calendar
         minDate={new Date(minDate)}
-        maxDate={new Date(maxDate)}
-        defaultValue={date}
+        maxDate={max}
+        defaultValue={defaultDate}
         onClickDay={value => navigate(`/${dateString(value)}`)}
       />
     </div>

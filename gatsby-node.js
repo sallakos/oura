@@ -1,7 +1,7 @@
-const { fetchData } = require('./scripts/fetch-data.js')
-const sleepData = require('./data/sleep.json')
-const activityData = require('./data/activity.json')
-const readinessData = require('./data/readiness.json')
+const readiness = require('./gatsby-node/readiness')
+const sleep = require('./gatsby-node/sleep')
+const activity = require('./gatsby-node/activity')
+const values = require('./gatsby-node/values')
 
 exports.sourceNodes = async ({
   actions,
@@ -10,54 +10,37 @@ exports.sourceNodes = async ({
 }) => {
   const { createNode } = actions
 
-  const create = (type, id, data) =>
-    data[type].forEach(item =>
-      createNode({
-        ...item,
-        date: item.summary_date,
-        id: createNodeId(`${type}-${item[id]}`),
-        parent: null,
-        children: [],
-        internal: {
-          type,
-          content: JSON.stringify(item),
-          contentDigest: createContentDigest(item),
-        },
-      })
-    )
-
-  create('sleep', 'bedtime_start', sleepData)
-  create('activity', 'day_start', activityData)
-  create('readiness', 'summary_date', readinessData)
+  readiness.create(createNode, createContentDigest, createNodeId)
+  sleep.create(createNode, createContentDigest, createNodeId)
+  activity.create(createNode, createContentDigest, createNodeId)
+  values.create(createNode, createContentDigest, createNodeId)
 
   return
 }
+
 exports.createPages = async function ({ actions, graphql }) {
   const { data } = await graphql(`
     query {
       allReadiness {
         nodes {
-          summary_date
+          date
         }
       }
     }
   `)
   const nodes = data.allReadiness.nodes
-  const minDate = nodes[0].summary_date
-  const maxDate = nodes[nodes.length - 1].summary_date
 
   nodes.forEach(node => {
-    const slug = `/${node.summary_date}`
+    const slug = `/${node.date}`
     actions.createPage({
       path: slug,
       component: require.resolve(`./src/templates/Data.tsx`),
-      context: { date: node.summary_date, minDate, maxDate },
+      context: { date: node.date },
     })
   })
 
   actions.createPage({
     path: `/`,
     component: require.resolve(`./src/templates/FrontPage.tsx`),
-    context: { minDate, maxDate },
   })
 }

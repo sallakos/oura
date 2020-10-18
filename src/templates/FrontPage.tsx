@@ -1,15 +1,9 @@
 import React from 'react'
 import Page from '../components/Page'
 
-export default ({ pageContext }) => {
-  const { minDate, maxDate } = pageContext
-
-  const now = new Date()
-  const max = new Date(maxDate)
-  const date = now <= max ? now : max
-
+export default () => {
   return (
-    <Page minDate={minDate} maxDate={maxDate} date={date}>
+    <Page date={new Date()}>
       <h1>Welcome!</h1>
     </Page>
   )
