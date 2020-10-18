@@ -34,7 +34,7 @@ exports.createPages = async function ({ actions, graphql }) {
     const slug = `/${node.date}`
     actions.createPage({
       path: slug,
-      component: require.resolve(`./src/templates/Data.tsx`),
+      component: require.resolve(`./src/templates/DataPage.tsx`),
       context: { date: node.date },
     })
   })
