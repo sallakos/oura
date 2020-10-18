@@ -1,7 +1,7 @@
 import React from 'react'
-import Page from '../components/Page'
+import { Page } from '../components/Page'
 
-export default () => {
+export const FronPage = () => {
   return (
     <Page date={new Date()}>
       <h1>Tervetuloa!</h1>

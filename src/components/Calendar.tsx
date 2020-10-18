@@ -1,10 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import Calendar from 'react-calendar'
+import ReactCalendar from 'react-calendar'
 
-export default props => <StyledCalendar {...props} />
+interface Props {
+  minDate: Date
+  maxDate: Date
+  defaultValue: Date
+  onClickDay: (value: Date) => void
+}
 
-const StyledCalendar = styled(Calendar)`
+export const Calendar = (props: Props) => <StyledCalendar {...props} />
+
+const StyledCalendar = styled(ReactCalendar)`
   width: 350px;
   max-width: 100%;
 

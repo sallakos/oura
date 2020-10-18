@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql, navigate, useStaticQuery } from 'gatsby'
-import Calendar from './Calendar'
+import { Calendar } from './Calendar'
 import { createGlobalStyle } from 'styled-components'
 import { dateUrl } from '../utils/utils'
 
@@ -20,7 +20,12 @@ const GlobalStyle = createGlobalStyle`
 
 `
 
-export default ({ date, children }) => {
+interface Props {
+  date: Date
+  children: React.ReactNode
+}
+
+export const Page = ({ date, children }: Props) => {
   const query = graphql`
     query {
       values {
@@ -43,7 +48,7 @@ export default ({ date, children }) => {
         minDate={new Date(minDate)}
         maxDate={max}
         defaultValue={defaultDate}
-        onClickDay={value => navigate(`/${dateUrl(value)}`)}
+        onClickDay={(value: Date) => navigate(`/${dateUrl(value)}`)}
       />
     </div>
   )

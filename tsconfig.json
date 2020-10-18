@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "target": "esnext",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "lib",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "jsx": "preserve"
+  },
+  "exclude": ["node_modules", "public", ".cache"]
+}
